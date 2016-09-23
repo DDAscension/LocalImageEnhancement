@@ -2,7 +2,7 @@
 clear;
 clc;
 load('forest.mat');
-
+figure
 subplot(3,3,1)
 imshow(forestgray, []);
 
