@@ -1,4 +1,6 @@
  function myui
+    clear;
+    clc;
     % Create a figure and axes
     f = figure('Visible','off');
 
@@ -13,8 +15,9 @@
     
     f.Visible = 'on';
 
+    loadedForest = load('forest');
+    forestgray = loadedForest.forestgray;
     calculateSHE( sldE.Value, sldk0.Value, sldk1.Value, sldk2.Value, 3, f, forestgray); 
-    load('forest');
 
     function surfzlim(source,event)
         calculateSHE( sldE.Value, sldk0.Value, sldk1.Value, sldk2.Value, 3, f, forestgray); 
