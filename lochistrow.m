@@ -9,9 +9,9 @@ function equalizedRow = lochistrow(im, X, filter_size)
     
     %Compute equalized pixel at first pixel of row (special case where
     %full histogram must be computed
-    pixelLevel = im(floor(filter_size/2), floor(filter_size/2));
+    pixelLevel = im(floor(filter_size/2)+1, floor(filter_size/2)+1);
     equalizedRow(1) = histtrans(hc, pixelLevel, filter_size^2);
-   
+    
     for Y=1:(width-filter_size)
         hc_to_add = histcounts(im(X:Xend, Y+filter_size), colors);
         hc_to_remove = histcounts(im(X:Xend, Y), colors);
