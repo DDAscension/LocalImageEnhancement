@@ -1,6 +1,6 @@
 %Function that performs local histogram equalization where each histogram
 %covers filter_size*filter_size pixels
-function new_image = lochist(image, filter_size)
+function new_image = lochist(image, filter_size, padoption)
     new_image = image; %Sensible default if any error should occur
     
     %Check if input meet requirements
@@ -12,7 +12,7 @@ function new_image = lochist(image, filter_size)
         return;
     end
 
-    im = padarray2d(image, floor(filter_size/2));    
+    im = padarray2d(image, floor(filter_size/2), padoption);    
     
     %For each row in original image, compute initial histogram in that row and then
     %perform local histogram equalization
