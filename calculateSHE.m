@@ -28,6 +28,8 @@ ys = 1 + padSize;
 yf = N + padSize;
 
 conditionalMatrix = forestgray * 0 + 1;
+conditionalMatrixMean = forestgray * 0 + 1; %Each cell should equal E where mean condition is satisfied
+conditionalMatrixVar = forestgray * 0 + 1; %Each cell should equal E where variance condition is satisfied
 
 debugMatrix = conditionalMatrix * 0;
 
@@ -41,21 +43,42 @@ for x = xs:xf
    for y = ys:yf 
        surrounding = paddedImage(x-padSize:x+padSize, y-padSize:y+padSize);
        surroundingMean = imgMean(surrounding);
-       surroundingVar = imgVar(surrounding);   
-       if ((surroundingMean <= k0 * globalMean) && (k1*globalVar <=surroundingVar) && (k2*globalVar >=surroundingVar))
+       surroundingVar = imgVar(surrounding);
+       
+       meancond = surroundingMean <= k0 * globalMean;
+       varcond = (k1*globalVar <=surroundingVar) && (k2*globalVar >=surroundingVar);
+       if (meancond && varcond)
            conditionalMatrix(x-padSize, y-padSize) = E;
            debugMatrix(x-padSize, y-padSize) = 1;
+       end
+       if (meancond)
+           conditionalMatrixMean(x-padSize, y-padSize) = E;
+       end
+       if (varcond)
+           conditionalMatrixVar(x-padSize, y-padSize) = E;
        end
    end
 end
 
 finalImage = forestgray .* conditionalMatrix;
 
-%subplot(2,2,1)
-%imshow(forestgray, [])
+hold on;
+subplot(2,2,1)
+imshow(forestgray, [])
+title('Original image')
 
-%subplot(2,2,2)
-fig,imshow(finalImage, [])
+subplot(2,2,2)
+imshow(finalImage, [])
+title('Final image')
+
+subplot(2,2,3)
+imshow(conditionalMatrixMean, [])
+title('Only considering mean condition')
+
+subplot(2,2,4)
+imshow(conditionalMatrixVar, [])
+title('Only considering variance condition')
+hold off;
 
 
 %subplot(2,2,3)
