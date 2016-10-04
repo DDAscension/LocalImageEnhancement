@@ -1,5 +1,5 @@
 %
-function dummy = calculateSHE(E, k0, k1, k2, surroundingSize, fig, forestgray)
+function dummy = calculateSHE(E, k0, k1, k2, surroundingSize, fig, forestgray, padoption)
 
 %Statistical histogram equalization
 
@@ -20,7 +20,7 @@ globalVar = imgVar(forestgray);
 %surroundingSize = 3;
 padSize = floor(surroundingSize/2);
 
-paddedImage = padarray2d(forestgray, padSize);
+paddedImage = padarray2d(forestgray, padSize, padoption);
 
 xs = 1 + padSize;
 xf = M + padSize;
