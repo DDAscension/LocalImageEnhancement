@@ -13,7 +13,7 @@ imshow(finalImage, [])
 title('Locally enhanced image')
 
 subplot(1,3,3)
-imshow(histeq(forestgray), [])
+imshow(histeq(forestgray, 256), []); %Matlab tricks us and default #outputColors = 64 unless explicitly specified!
 title('Globally enhanced image');
 hold off;
 
