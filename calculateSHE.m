@@ -45,7 +45,7 @@ end
 %Ensure that amplification of eligible pixels don't exceed max value of
 %original image, such that other parts become darkened by matlab
 finalImage = forestgray .* conditionalMatrix;
-maxGray = max(max(forestgray))
+maxGray = max(max(forestgray));
 finalImage(finalImage >= maxGray) = maxGray;
 
 
