@@ -16,7 +16,11 @@ function new_image = lochist(image, filter_size, padoption)
     
     %For each row in original image, compute initial histogram in that row and then
     %perform local histogram equalization
-    for X=1:(size(im, 1)-filter_size + 1)
+    h = waitbar(0, 'Please wait...');
+    rows = (size(im, 1)-filter_size + 1);
+    for X=1:rows
         new_image(X, 1:size(new_image, 2)) = lochistrow(im, X, filter_size);
+        waitbar(X/rows, h)
     end
+    close(h);
 end
