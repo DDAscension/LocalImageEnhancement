@@ -40,7 +40,9 @@ for x = xs:xf
            conditionalMatrixVar(x-padSize, y-padSize) = 1;
        end
    end
-   
+   if (h~=0)
+      waitbar((x-xs)/(xf-xs), h);
+   end
    
    
 end
@@ -52,7 +54,7 @@ maxGray = max(max(forestgray));
 finalImage(finalImage >= maxGray) = maxGray;
 
 
-
+hold on;
 subplot(2,2,1)
 imshow(forestgray, [])
 title('Original image')
@@ -68,6 +70,6 @@ title('Only considering mean condition')
 subplot(2,2,4)
 imshow(conditionalMatrixVar, [])
 title('Only considering variance condition')
-
+hold off;
 
 dummy = 3.14;

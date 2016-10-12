@@ -1,7 +1,7 @@
 %Function that performs local histogram equalization where each histogram
 %covers filter_size*filter_size pixels
 function outputImage = lochist(image, filterSize, padoption, calcOpt, wBar)
-    outputImage = image; %Sensible default if any error should occur
+    outputImage = zeros(size(image)); %Sensible default if any error should occur
     
     %Check if input meet requirements
     if(~mod(filterSize, 2))
@@ -28,7 +28,7 @@ function outputImage = lochist(image, filterSize, padoption, calcOpt, wBar)
                         y2 = Ymax;
                     end
                     subimage = image(x:x2, y:y2);
-                    subimage = histeq(subimage, 256);
+                    subimage = histeq(subimage, 0:255);
                     outputImage(x:x2, y:y2) = subimage;
                 end
                 if (wBar~=0)
@@ -40,22 +40,20 @@ function outputImage = lochist(image, filterSize, padoption, calcOpt, wBar)
             %process in overlapping blocks
             pad = floor(filterSize/2);
             paddedImage = padarray2d(image, pad, padoption);
-            outputImage = paddedImage;
+            
             %size(image)
             [Xmax, Ymax] = size(paddedImage);
             for x = pad + 1:Xmax-pad
                 for y = pad + 1:(Ymax-pad)
                     subimage = paddedImage(x-pad:x+pad, y-pad:y+pad);
-                    subimage = histeq(subimage, 256);
-                    outputImage(x, y) = subimage(pad+1, pad+1);
+                    si = histeq(subimage, 0:255);
+                    outputImage(x-pad, y-pad) = si(pad, pad);
                 end
                 if (wBar~=0)
                     waitbar(x/Xmax, wBar);
                 end
             end
-            %remove pad
-            outputImage = outputImage(pad+1:Xmax-pad, pad+1:Ymax-pad);
-            %size(outputImage)
+            
             
         case 'Smart'
             %For each row in original image, compute initial histogram in that row and then

@@ -29,7 +29,7 @@
         loadedImage = im2uint8(mat2gray(loadedForest.forestgray));
     else
         
-        loadedImage = im2uint8(imread(varargin{1}));
+        loadedImage = im2uint8(mat2gray(imread(varargin{1})));
     end
     
     
@@ -38,7 +38,7 @@
     imshow(loadedImage, [])
     title('Original image')
     subplot(1,3,3)
-    imshow(histeq(loadedImage, 256), []); %Matlab tricks us and default #outputColors = 64 unless explicitly specified!
+    imshow(histeq(loadedImage, 0:255), []); %Matlab tricks us and default #outputColors = 64 unless explicitly specified!
     title('Globally enhanced image');
     hold off;    
     f.Visible = 'on';
