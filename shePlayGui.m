@@ -38,10 +38,10 @@
     %forestgray = mat2gray(loadedForest.forestgray);
     if (nargin==0) 
         loadedForest = load('forest');
-        forestgray = im2uint8(mat2gray(loadedForest.forestgray));
+        forestgray = (mat2gray(loadedForest.forestgray));
     else
         
-        forestgray = im2uint8(mat2gray(imread(varargin{1})));
+        forestgray = (mat2gray(imread(varargin{1})));
     end
     
     
